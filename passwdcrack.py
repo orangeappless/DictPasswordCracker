@@ -35,7 +35,13 @@ def main():
     # Read contents of shadow file, and store in list
     with open(cmd_args.shadow, "r") as file:
         for line in file:
+            # Skip over non-users
+            if "!" in line or "*" in line:
+                continue
+            
             users.append(line)
+
+    print(f"[STARTING] {len(users)} users loaded...\n")
 
     # Start timer for total elapsed time
     total_start_time = time.time()
@@ -67,7 +73,7 @@ def main():
         
         # If no password is found
         if is_found == False:
-            print(f"[NOT FOUND] {user}")
+            print(f"[NOT FOUND] {user}", end="\r")
 
         # Elasped time for user
         user_end_time = time.time()
